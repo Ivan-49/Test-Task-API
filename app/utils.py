@@ -1,9 +1,8 @@
 import aiohttp
 from fastapi import HTTPException
-from app import schemas
-from typing import Optional
+from typing import Optional, Dict, Any
 
-async def fetch_product_details(artikul: str) -> Optional[schemas.Product]:
+async def fetch_product_details(artikul: str) -> Optional[Dict[str, Any]]:
     url = f"https://card.wb.ru/cards/v1/detail?appType=1&curr=rub&dest=-1257786&sp=30&nm={artikul}"
     try:
         async with aiohttp.ClientSession() as session:
@@ -25,13 +24,13 @@ async def fetch_product_details(artikul: str) -> Optional[schemas.Product]:
                         sizes = product.get("sizes", [])
                         stocks = sizes[0].get("stocks", 0) if sizes else 0
 
-                        return schemas.Product(
-                            name=name,
-                            artikul=artikul,
-                            price=price,
-                            rating=rating,
-                            total_quantity=stocks,
-                        )
+                        return {
+                            "name": name,
+                            "artikul": artikul,
+                            "price": price,
+                            "rating": rating,
+                            "total_quantity": stocks,
+                        }
                     else:
                         raise HTTPException(status_code=404, detail="Product not found on Wildberries")
                 else:
