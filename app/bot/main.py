@@ -2,8 +2,8 @@ import asyncio
 import logging
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import CommandStart
-from app.bot.handlers import get_product_info
-from app.bot.keyboards import get_product_keyboard
+from .handlers import get_product_info
+from .keyboards import get_product_keyboard
 from app.utils import fetch_product_details
 
 
