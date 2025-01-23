@@ -7,7 +7,7 @@ from .keyboards import get_product_keyboard
 from app.utils import fetch_product_details
 
 
-BOT_TOKEN = "6422200325:AAE1wLfpb5t0RUWS_pJA-1ORlbnli7boy5Y" #замените на токен своего бота
+BOT_TOKEN = "YOUR_BOT_TOKEN" 
 
 logging.basicConfig(level=logging.INFO)
 
