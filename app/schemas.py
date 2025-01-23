@@ -1,17 +1,18 @@
 from pydantic import BaseModel
+from typing import Optional
 
-class ProductBase(BaseModel):
+class ProductCreate(BaseModel):
     name: str
-    artikul: str
     price: float
-    rating: float
-    total_quantity: int
+    artikul: int
+    rating: Optional[float] = None
 
-class ProductCreate(ProductBase):
-    pass
-
-class Product(ProductBase):
+class Product(ProductCreate):
     id: int
 
-    class Config:
-        orm_mode = True
+class SubscribeCreate(BaseModel):
+    product_id: int
+    email: str
+
+class Subscribe(SubscribeCreate):
+    id: int
