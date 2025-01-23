@@ -21,15 +21,18 @@ async def fetch_product_details(artikul: str) -> Optional[Dict[str, Any]]:
                             raise HTTPException(status_code=500, detail="Missing 'salePriceU' field in Wildberries response")
                         price = price_u / 100
                         rating = product.get("rating", 0.0)  # Значение по умолчанию 0.0
-                        sizes = product.get("sizes", [])
-                        stocks = sizes[0].get("stocks", 0) if sizes else 0
 
+                        sizes = product.get("sizes", [])
+                        total_quantity = 0
+                        for size in sizes:
+                            total_quantity += sum(item.get("qty", 0) for item in size.get("stocks", []))
+                                             
                         return {
                             "name": name,
                             "artikul": artikul,
                             "price": price,
                             "rating": rating,
-                            "total_quantity": stocks,
+                            "total_quantity": total_quantity,
                         }
                     else:
                         raise HTTPException(status_code=404, detail="Product not found on Wildberries")
