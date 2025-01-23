@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import CommandStart, Text
 from app.bot.handlers import get_product_info
 from app.bot.keyboards import get_product_keyboard
@@ -19,7 +19,7 @@ async def send_welcome(message: types.Message):
     await message.reply("Привет! Я бот для получения данных по товарам.", reply_markup=get_product_keyboard())
 
 
-@dp.message(Text(text="Узнать о товаре"))
+@dp.message(F.text.contains("Узнать о товаре"))
 async def handle_product_command(message: types.Message):
     await message.answer("Пожалуйста, введите артикул товара:")
 
