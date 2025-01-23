@@ -1,27 +1,47 @@
-import logging
 import asyncio
+import logging
 from aiogram import Bot, Dispatcher, types
-from aiogram.fsm.storage.memory import MemoryStorage
-from aiogram.filters.command import Command 
-from .handlers import register_handlers
-from .keyboards import get_product_keyboard
+from aiogram.filters import CommandStart, Text
+from app.bot.handlers import get_product_info
+from app.bot.keyboards import get_product_keyboard
+from app.utils import fetch_product_details
 
-API_TOKEN = '6422200325:AAE1wLfpb5t0RUWS_pJA-1ORlbnli7boy5Y'
+
+BOT_TOKEN = "6422200325:AAHq8QjP56J0Hn3nZ-B6oQoR880H_u60G6o" #замените на токен своего бота
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot(token=API_TOKEN)
-storage = MemoryStorage()
-dp = Dispatcher(storage=storage)
+bot = Bot(token=BOT_TOKEN)
+dp = Dispatcher()
 
-async def start_bot():
-    register_handlers(dp)
-    await dp.start_polling(bot)
-
-@dp.message(Command('start'))
+@dp.message(CommandStart())
 async def send_welcome(message: types.Message):
     await message.reply("Привет! Я бот для получения данных по товарам.", reply_markup=get_product_keyboard())
 
-if __name__ == '__main__':
-    logging.info("Starting bot...")
-    asyncio.run(start_bot())
+
+@dp.message(Text(text="Узнать о товаре"))
+async def handle_product_command(message: types.Message):
+    await message.answer("Пожалуйста, введите артикул товара:")
+
+@dp.message()
+async def handle_product_input(message: types.Message):
+    if message.text and message.text.isdigit():
+        product_info = await get_product_info(message.text)
+        if product_info:
+            await message.answer(f"Информация о товаре:\n\n"
+                                f"Название: {product_info['name']}\n"
+                                f"Цена: {product_info['price']}\n"
+                                f"Рейтинг: {product_info['rating']}\n"
+                                f"Количество: {product_info['total_quantity']}")
+        else:
+            await message.answer("Товар с таким артикулом не найден.")
+    else:
+      await message.answer("Введите корректный артикул товара.")
+
+
+
+async def main():
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    asyncio.run(main())
