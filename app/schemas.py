@@ -7,12 +7,18 @@ class ProductCreate(BaseModel):
     artikul: int
     rating: Optional[float] = None
 
-class Product(ProductCreate):
+class Product(BaseModel):
     id: int
+    name: str
+    price: float
+    artikul: int
+    rating: Optional[float] = None
 
 class SubscribeCreate(BaseModel):
     product_id: int
     email: str
 
-class Subscribe(SubscribeCreate):
+class Subscribe(BaseModel):
     id: int
+    product_id: int
+    email: str
