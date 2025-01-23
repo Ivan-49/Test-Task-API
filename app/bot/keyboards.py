@@ -1,6 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 def get_product_keyboard():
-    kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.add(KeyboardButton("Получить данные по товару"))
+    kb = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text="Узнать о товаре")]], resize_keyboard=True)
     return kb
