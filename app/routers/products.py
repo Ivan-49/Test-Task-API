@@ -1,23 +1,67 @@
 from fastapi import APIRouter, Depends, HTTPException
-from app import schemas
-from app.database import async_sessionmaker
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.utils import fetch_product_details
-from sqlalchemy.exc import IntegrityError
-from typing import Dict, Any
+from sqlalchemy.exc import IntegrityError, DataError, ProgrammingError, OperationalError
+import datetime
+
+from ..schemas import Product, ProductDetail
+from ..utils import fetch_product_details
+from ..models import Item
+from ..database import get_db
 
 router = APIRouter()
 
-async def get_db():
-    async with async_sessionmaker() as session:
-        yield session
 
-@router.post("/api/v1/products", response_model=schemas.Product, status_code=201)
-async def create_product(product: schemas.ProductCreate, session: AsyncSession = Depends(get_db)):
+@router.post("/api/v1/products/", response_model=None)
+async def create_product(product: Product, db: AsyncSession = Depends(get_db)):
     try:
-        product_details = await fetch_product_details(product.artikul)
-        return product_details
-    except IntegrityError:
-        raise HTTPException(status_code=409, detail=f"Product with artikul {product.artikul} already exists.")
+        result = await fetch_product_details(product.article)
+
+        # Преобразование строки в datetime объект, если необходимо.
+        if isinstance(result.get("datetime"), str):
+            try:
+                result["datetime"] = datetime.fromisoformat(result["datetime"])
+            except ValueError as e:
+                await db.rollback()
+                raise HTTPException(
+                    status_code=400, detail=f"Invalid datetime format: {e}"
+                )
+
+        detail = ProductDetail(**result)
+        detail = detail.model_dump()
+        item = Item(
+            name=detail.get("name"),
+            article=detail.get("article"),
+            price=detail.get("price"),
+            rating=detail.get("rating"),
+            total_quantity=detail.get("total_quantity"),
+            datetime=detail.get("datetime"),
+        )
+
+        db.add(item)
+        await db.commit()
+        # await db.refresh(item)
+
+        return {
+            "message": "Product created successfully"
+        }  # или возвращайте id, например
+    except IntegrityError as e:
+        await db.rollback()
+        raise HTTPException(
+            status_code=409, detail=f"Database integrity error: {e}"
+        )  # Конфликт
+    except DataError as e:
+        await db.rollback()
+        raise HTTPException(status_code=400, detail=f"Data error: {e}")  # Плохие данные
+    except ProgrammingError as e:
+        await db.rollback()
+        raise HTTPException(
+            status_code=400, detail=f"Programming error: {e}"
+        )  # Ошибка запроса
+    except OperationalError as e:
+        await db.rollback()
+        raise HTTPException(
+            status_code=500, detail=f"Database connection error: {e}"
+        )  # Проблема с БД
     except Exception as e:
-      raise HTTPException(status_code=500, detail=f"Internal server error: {e}")
+        await db.rollback()
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {e}")

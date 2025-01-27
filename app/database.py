@@ -1,13 +1,24 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import declarative_base, sessionmaker
+from dotenv import load_dotenv
+import os
 
-SQLALCHEMY_DATABASE_URL = "postgresql+asyncpg://user:password@db:5432/dbname"
+load_dotenv()
 
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-engine = create_async_engine(SQLALCHEMY_DATABASE_URL, echo=True)
+# Асинхронный engine
+async_engine = create_async_engine(DATABASE_URL, echo=True)  # echo=True для отладки
 
-async_sessionmaker = async_sessionmaker(engine)
+# Сессия для асинхронной работы
+async_session = sessionmaker(async_engine, class_=AsyncSession, expire_on_commit=False)
 
 Base = declarative_base()
+
+
+
+async def get_db():
+    """Dependency for getting async session"""
+    async with async_session() as session:
+        yield session

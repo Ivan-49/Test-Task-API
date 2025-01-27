@@ -1,5 +1,6 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-def get_product_keyboard():
-    kb = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text="Узнать о товаре")]], resize_keyboard=True)
-    return kb
+def info_product_keyboard() -> ReplyKeyboardBuilder:
+    builder = ReplyKeyboardBuilder()
+    builder.button(text="Узнать информацию о товаре")
+    return builder.as_markup(resize_keyboard=True)

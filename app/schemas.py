@@ -1,12 +1,20 @@
-from pydantic import BaseModel
-from typing import Optional
+from pydantic import BaseModel, Field
+from datetime import datetime as dt
 
-class ProductCreate(BaseModel):
-    artikul: str
+# from typing import List, Optional, Any
+
 
 class Product(BaseModel):
-    name: str
-    price: float
-    artikul: str
-    rating: float
-    total_quantity: int
+
+    article: str = Field(title="Article", description="The article of the product")
+
+
+class ProductDetail(BaseModel):
+    name: str = Field(title="Name", description="The name of the product")
+    article: str = Field(title="Article", description="The article of the product")
+    price: float = Field(title="Price", description="The price of the product")
+    rating: float = Field(title="Rating", description="The rating of the product")
+    total_quantity: int = Field(
+        title="Total Quantity", description="The total quantity of the product"
+    )
+    datetime: dt = Field(title="Datetime", description="The datetime of the product")
