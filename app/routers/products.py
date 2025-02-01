@@ -4,7 +4,7 @@ from sqlalchemy.exc import IntegrityError, DataError, ProgrammingError, Operatio
 import datetime
 
 from ..schemas import Product, ProductDetail
-from ..utils import fetch_product_details
+from ..utils.fetch_utils import fetch_product_details
 from ..models import Item
 from ..database import get_db
 

@@ -1,18 +1,14 @@
-from fastapi import Depends
-from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime, timezone
 import aiohttp
 from fastapi import HTTPException
 from typing import Optional, Dict, Any
 import logging
-from sqlalchemy import text
-import aioschedule as schedule
 
-from .schemas import ProductDetail
-from .models import Item
-from .database import get_db
 
 logger = logging.getLogger(__name__)
+
+
+
 
 
 async def fetch_product_details(artikul: str) -> Optional[Dict[str, Any]]:
@@ -108,48 +104,3 @@ async def fetch_product_details(artikul: str) -> Optional[Dict[str, Any]]:
         )
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {e}")
 
-
-async def scheduler_pars(artikul: str, data_base: AsyncSession = Depends(get_db)):
-
-    result = await fetch_product_details(artikul)
-
-    # Преобразование строки в datetime объект, если необходимо.
-    if isinstance(result.get("datetime"), str):
-        try:
-            result["datetime"] = datetime.fromisoformat(result["datetime"])
-        except ValueError as e:
-            await data_base.rollback()
-            raise HTTPException(status_code=400, detail=f"Invalid datetime format: {e}")
-
-    detail = ProductDetail(**result)
-    detail = detail.model_dump()
-    item = Item(
-        name=detail.get("name"),
-        article=detail.get("article"),
-        price=detail.get("price"),
-        rating=detail.get("rating"),
-        total_quantity=detail.get("total_quantity"),
-        datetime=detail.get("datetime"),
-    )
-
-    data_base.add(item)
-    await data_base.commit()
-    await data_base.refresh(item)
-
-    return {"message": f"Scheduled task added for {artikul} every 30 minutes"}
-
-
-
-async def get_product_info(artikul: str, db: AsyncSession = get_db()):
-    sql_request = text("""
-    SELECT name, price, rating, total_quantity
-    FROM items
-    WHERE article = :artikul
-    ORDER BY datetime DESC
-    LIMIT 1
-    """)
-    async for session in db: # Получаем сессию из генератора
-        result = await session.execute(sql_request, {"artikul": artikul})
-        result = result.first()
-        print(f'result: {result}')
-        return result if result else None

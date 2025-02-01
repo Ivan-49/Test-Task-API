@@ -4,7 +4,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from sqlalchemy import text
 
-from ..utils import fetch_product_details
+from ..utils.fetch_utils import fetch_product_details
 from ..database import async_session
 from ..models import Item
 from ..schemas import ProductDetail
