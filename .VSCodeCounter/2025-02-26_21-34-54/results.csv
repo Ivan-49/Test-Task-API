@@ -1,0 +1,36 @@
+"filename", "language", "Docker", "pip requirements", "Properties", "Python", "YAML", "comment", "blank", "total"
+"c:\Users\remne\Documents\Python\Test-Task-API-2\Dockerfile", "Docker", 6, 0, 0, 0, 0, 0, 4, 10
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\conf.py", "Python", 0, 0, 0, 16, 0, 0, 2, 18
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\__init__.py", "Python", 0, 0, 0, 6, 0, 0, 2, 8
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\get_data_items.py", "Python", 0, 0, 0, 9, 0, 0, 3, 12
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\helper.py", "Python", 0, 0, 0, 7, 0, 0, 3, 10
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\item_keyboard.py", "Python", 0, 0, 0, 16, 0, 0, 3, 19
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\start_keyboard.py", "Python", 0, 0, 0, 7, 0, 0, 3, 10
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\sub_keyboard.py", "Python", 0, 0, 0, 7, 0, 0, 3, 10
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\sub_user_keyboard.py", "Python", 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\main.py", "Python", 0, 0, 0, 16, 0, 0, 11, 27
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\AI.py", "Python", 0, 0, 0, 8, 0, 0, 5, 13
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\__init__.py", "Python", 0, 0, 0, 14, 0, 0, 2, 16
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\all_informatioans.py", "Python", 0, 0, 0, 38, 0, 0, 7, 45
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\analog.py", "Python", 0, 0, 0, 18, 0, 0, 7, 25
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\commands.py", "Python", 0, 0, 0, 20, 0, 0, 10, 30
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\information.py", "Python", 0, 0, 0, 62, 0, 0, 18, 80
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\sub_for_item.py", "Python", 0, 0, 0, 38, 0, 0, 8, 46
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\states.py", "Python", 0, 0, 0, 15, 0, 0, 4, 19
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\utils\datebase_utils.py", "Python", 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\database.py", "Python", 0, 0, 0, 14, 0, 2, 8, 24
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\main.py", "Python", 0, 0, 0, 19, 0, 0, 10, 29
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\models.py", "Python", 0, 0, 0, 16, 0, 0, 8, 24
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\routers\__init__.py", "Python", 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\routers\products.py", "Python", 0, 0, 0, 23, 0, 0, 11, 34
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\routers\subscribe.py", "Python", 0, 0, 0, 18, 0, 0, 8, 26
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\schemas.py", "Python", 0, 0, 0, 12, 0, 0, 6, 18
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\shedule\shedule.py", "Python", 0, 0, 0, 28, 0, 0, 9, 37
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\utils\data_base_communications\add_to_items.py", "Python", 0, 0, 0, 29, 0, 0, 8, 37
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\utils\data_base_communications\get_item.py", "Python", 0, 0, 0, 33, 0, 0, 9, 42
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\utils\database_utils.py", "Python", 0, 0, 0, 31, 0, 4, 15, 50
+"c:\Users\remne\Documents\Python\Test-Task-API-2\app\utils\fetch_utils.py", "Python", 0, 0, 0, 40, 0, 0, 8, 48
+"c:\Users\remne\Documents\Python\Test-Task-API-2\docker-compose.yml", "YAML", 0, 0, 0, 0, 43, 0, 3, 46
+"c:\Users\remne\Documents\Python\Test-Task-API-2\nginx.conf", "Properties", 0, 0, 15, 0, 0, 0, 3, 18
+"c:\Users\remne\Documents\Python\Test-Task-API-2\requirements.txt", "pip requirements", 0, 47, 0, 0, 0, 0, 1, 48
+"Total", "-", 6, 47, 15, 560, 43, 6, 205, 882

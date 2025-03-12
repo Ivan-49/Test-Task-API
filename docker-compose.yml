@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   app:
@@ -7,7 +7,8 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   bot:
     build: .
     command: python -m app.bot.main
@@ -36,6 +37,12 @@ services:
       - "5432:5432"  # Отобразите порт 5432 (стандартный порт PostgreSQL)
     volumes:
       - db_data:/var/lib/postgresql/data  # Примонтируйте том для хранения данных
-
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: ["postgres", "-c", "shared_preload_libraries=pg_trgm"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
+      interval: 1s
+      timeout: 120s
+      retries: 5
 volumes:  
   db_data:

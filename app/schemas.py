@@ -1,20 +1,17 @@
 from pydantic import BaseModel, Field
-from datetime import datetime as dt
+from datetime import datetime
 
-# from typing import List, Optional, Any
+
+class Article(BaseModel):
+
+    article: str = Field(title="Article", description="Article")
 
 
 class Product(BaseModel):
-
-    article: str = Field(title="Article", description="The article of the product")
-
-
-class ProductDetail(BaseModel):
-    name: str = Field(title="Name", description="The name of the product")
-    article: str = Field(title="Article", description="The article of the product")
-    price: float = Field(title="Price", description="The price of the product")
-    rating: float = Field(title="Rating", description="The rating of the product")
-    total_quantity: int = Field(
-        title="Total Quantity", description="The total quantity of the product"
-    )
-    datetime: dt = Field(title="Datetime", description="The datetime of the product")
+    artikul: str = Field(title="Artikul", description="Artikul")
+    name: str = Field(title="Name", description="Name")
+    standart_price: float = Field(title="Standart Price", description="Standart Price")
+    sell_price: float = Field(title="Sell Price", description="Sell Price")
+    total_quantity: int = Field(title="Total Quantity", description="Total Quantity")
+    date_time: datetime = Field(title="Datetime", description="Datetime")
+    rating: float = Field(title="Rating", description="Rating")

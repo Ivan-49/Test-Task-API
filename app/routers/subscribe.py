@@ -1,30 +1,25 @@
-"""
-сделать так что бы подпииска работала следуюшим образом:
-
-    1. Пользователь создает подписку на продукт через API (GET /api/v1/subscribe/{product_id})
-    2. Пользователь получает информацию о продукте через API (GET /api/v1/products/{product_id})
-    3. Артикуль на который пользователь подписался, добавляется в таблицу scheduled_tasks
-    4. Асинхронный планировщик, каждые пол часа делает следующее:
-        1. Вытаскивает из БД все артикули из таблицы scheduled_tasks
-        2. Получает инфорцию о каждом из продуктов через функцию fetch_product_details
-        3. Добавляет информацию о продукте в таблицу items
-        
-"""
-
-from fastapi import APIRouter, Depends
+from datetime import datetime
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from ..schemas import Product
-from ..models import ScheduledTask
-from ..database import get_db
+import logging
+
+from ..schemas import Article, Product
+from ..utils.fetch_utils import fetch_product_details
+from ..utils.data_base_communications.add_to_items import add_to_subs
+from ..utils.database_utils import get_db
 
 router = APIRouter()
 
+logger = logging.getLogger(__name__)
 
-@router.get("/api/v1/subscribe/product", response_model=None)
-async def create_product(product: str, db: AsyncSession = Depends(get_db)):
-    product = Product(article=product)
-    item_article = ScheduledTask(article=product.article)
 
-    db.add(item_article)
-    await db.commit()
-    return {"message": "Product created successfully"}
+@router.post("/api/v1/subscribe", response_model=None)
+async def get_products(article: Article, session: AsyncSession = Depends(get_db)):
+
+    try:
+        article = article.model_dump().get("article")
+        return await add_to_subs(articul=article, session=session)
+
+    except Exception as e:
+        logger.exception(f"Error processing product: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")

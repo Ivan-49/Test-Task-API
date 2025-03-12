@@ -1,0 +1,75 @@
+Date : 2025-02-26 21:34:48
+Directory : c:\Users\remne\Documents\Python\Test-Task-API-2
+Total : 34 files,  662 codes, 6 comments, 205 blanks, all 873 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| Python           |         30 |        551 |          6 |        194 |        751 |
+| pip requirements |          1 |         47 |          0 |          1 |         48 |
+| YAML             |          1 |         43 |          0 |          3 |         46 |
+| Properties       |          1 |         15 |          0 |          3 |         18 |
+| Docker           |          1 |          6 |          0 |          4 |         10 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                               | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                  |         34 |        662 |          6 |        205 |        873 |
+| . (Files)                                                                                          |          4 |        111 |          0 |         11 |        122 |
+| app                                                                                                |         30 |        551 |          6 |        194 |        751 |
+| app (Files)                                                                                        |          4 |         61 |          2 |         32 |         95 |
+| app\bot                                                                                            |         18 |        288 |          0 |         93 |        381 |
+| app\bot (Files)                                                                                    |          3 |         47 |          0 |         17 |         64 |
+| app\bot\keyboards                                                                                  |          7 |         52 |          0 |         18 |         70 |
+| app\bot\routers                                                                                    |          7 |        189 |          0 |         57 |        246 |
+| app\bot\utils                                                                                      |          1 |          0 |          0 |          1 |          1 |
+| app\routers                                                                                        |          3 |         41 |          0 |         20 |         61 |
+| app\shedule                                                                                        |          1 |         28 |          0 |          9 |         37 |
+| app\utils                                                                                          |          4 |        133 |          4 |         40 |        177 |
+| app\utils (Files)                                                                                  |          2 |         71 |          4 |         23 |         98 |
+| app\utils\data_base_communications                                                                 |          2 |         62 |          0 |         17 |         79 |
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                                                           | language         | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| c:\Users\remne\Documents\Python\Test-Task-API-2\Dockerfile                                         | Docker           |          6 |          0 |          4 |         10 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\conf.py                                    | Python           |         16 |          0 |          2 |         18 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\__init__.py                      | Python           |          6 |          0 |          2 |          8 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\get_data_items.py                | Python           |          9 |          0 |          3 |         12 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\helper.py                        | Python           |          7 |          0 |          3 |         10 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\item_keyboard.py                 | Python           |         16 |          0 |          3 |         19 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\start_keyboard.py                | Python           |          7 |          0 |          3 |         10 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\sub_keyboard.py                  | Python           |          7 |          0 |          3 |         10 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\keyboards\sub_user_keyboard.py             | Python           |          0 |          0 |          1 |          1 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\main.py                                    | Python           |         16 |          0 |         11 |         27 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\AI.py                              | Python           |          8 |          0 |          5 |         13 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\__init__.py                        | Python           |         14 |          0 |          2 |         16 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\all_informatioans.py               | Python           |         36 |          0 |          8 |         44 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\analog.py                          | Python           |         18 |          0 |          7 |         25 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\commands.py                        | Python           |         20 |          0 |         10 |         30 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\information.py                     | Python           |         62 |          0 |         18 |         80 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\routers\sub_for_item.py                    | Python           |         31 |          0 |          7 |         38 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\states.py                                  | Python           |         15 |          0 |          4 |         19 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\bot\utils\datebase_utils.py                    | Python           |          0 |          0 |          1 |          1 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\database.py                                    | Python           |         14 |          2 |          8 |         24 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\main.py                                        | Python           |         19 |          0 |         10 |         29 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\models.py                                      | Python           |         16 |          0 |          8 |         24 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\routers\__init__.py                            | Python           |          0 |          0 |          1 |          1 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\routers\products.py                            | Python           |         23 |          0 |         11 |         34 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\routers\subscribe.py                           | Python           |         18 |          0 |          8 |         26 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\schemas.py                                     | Python           |         12 |          0 |          6 |         18 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\shedule\shedule.py                             | Python           |         28 |          0 |          9 |         37 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\utils\data_base_communications\add_to_items.py | Python           |         29 |          0 |          8 |         37 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\utils\data_base_communications\get_item.py     | Python           |         33 |          0 |          9 |         42 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\utils\database_utils.py                        | Python           |         31 |          4 |         15 |         50 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\app\utils\fetch_utils.py                           | Python           |         40 |          0 |          8 |         48 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\docker-compose.yml                                 | YAML             |         43 |          0 |          3 |         46 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\nginx.conf                                         | Properties       |         15 |          0 |          3 |         18 |
+| c:\Users\remne\Documents\Python\Test-Task-API-2\requirements.txt                                   | pip requirements |         47 |          0 |          1 |         48 |
+| Total                                                                                              |                  |        662 |          6 |        205 |        873 |
++----------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+

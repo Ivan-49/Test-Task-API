@@ -8,9 +8,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-
-
-
 async def fetch_product_details(artikul: str) -> Optional[Dict[str, Any]]:
     url = f"https://card.wb.ru/cards/v1/detail?appType=1&curr=rub&dest=-1257786&sp=30&nm={artikul}"
     try:
@@ -21,34 +18,14 @@ async def fetch_product_details(artikul: str) -> Optional[Dict[str, Any]]:
                     data = await response.json()
                     products = data.get("data", {}).get("products", [])
                     if products:
+
                         product = products[0]
-                        if not product:
-                            logger.error(f"Product is None for artikul: {artikul}")
-                            raise HTTPException(
-                                status_code=404,
-                                detail="Product not found in Wildberries response",
-                            )
-
-                        # Строгие проверки наличия полей
+                        artikul = product.get("id")
                         name = product.get("name")
-                        if not name:
-                            logger.error(f"Missing 'name' field for artikul: {artikul}")
-                            raise HTTPException(
-                                status_code=500,
-                                detail="Missing 'name' field in Wildberries response",
-                            )
-                        price_u = product.get("salePriceU")
-                        if price_u is None:
-                            logger.error(
-                                f"Missing 'salePriceU' field for artikul: {artikul}"
-                            )
-                            raise HTTPException(
-                                status_code=500,
-                                detail="Missing 'salePriceU' field in Wildberries response",
-                            )
-                        price = price_u / 100
-                        rating = product.get("rating", 0.0)  # Значение по умолчанию 0.0
-
+                        standart_price = product.get("priceU") / 100
+                        sell_price = product.get("salePriceU") / 100
+                        rating = product.get("rating", 0.0)
+                        utc_datetime = datetime.now(timezone.utc)
                         sizes = product.get("sizes", [])
                         total_quantity = 0
                         for size in sizes:
@@ -56,51 +33,41 @@ async def fetch_product_details(artikul: str) -> Optional[Dict[str, Any]]:
                                 item.get("qty", 0) for item in size.get("stocks", [])
                             )
 
-                        utc_datetime = datetime.now(timezone.utc)  # Текущее UTC время
-                        logger.info(
-                            f"Successfully fetched product details for artikul: {artikul}"
-                        )
                         return {
-                            "name": name,
-                            "article": artikul,
-                            "price": price,
-                            "rating": rating,
-                            "total_quantity": total_quantity,
-                            "datetime": utc_datetime,
+                            "artikul": str(artikul),
+                            "name": str(name),
+                            "standart_price": float(standart_price),
+                            "sell_price": float(sell_price),
+                            "total_quantity": int(total_quantity),
+                            "date_time": utc_datetime,
+                            "rating": float(rating),
                         }
-                    else:
-                        logger.warning(
-                            f"Product not found on Wildberries for artikul: {artikul}"
-                        )
-                        raise HTTPException(
-                            status_code=404, detail="Product not found on Wildberries"
-                        )
-                else:
-                    logger.error(
-                        f"Wildberries API request failed with status code {response.status} for artikul: {artikul}"
-                    )
-                    raise HTTPException(
-                        status_code=response.status,
-                        detail=f"Wildberries API request failed with status code {response.status}",
-                    )
-    except aiohttp.ClientError as e:
-        logger.error(f"Error connecting to Wildberries API for artikul {artikul}: {e}")
-        raise HTTPException(
-            status_code=500, detail=f"Error connecting to Wildberries API: {e}"
-        )
-    except (KeyError, IndexError, TypeError) as e:
-        logger.error(
-            f"Error parsing Wildberries API response for artikul {artikul}: {e}"
-        )
-        raise HTTPException(
-            status_code=500, detail=f"Error parsing Wildberries API response: {e}"
-        )
-    except HTTPException as e:
-        # Пробрасываем HTTPException как есть
-        raise e
-    except Exception as e:
-        logger.exception(
-            f"Unexpected error fetching product details for artikul {artikul}: {e}"
-        )
-        raise HTTPException(status_code=500, detail=f"Internal Server Error: {e}")
 
+    except Exception as e:
+        print(e)
+
+
+async def fetch_gpt(CHAD_API_KEY, request, condition: str = ""):
+    request_json = {"message": f"{condition} {request}", "api_key": CHAD_API_KEY}
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(
+            "https://ask.chadgpt.ru/api/public/gpt-4o-mini", json=request_json
+        ) as response:
+            logger.error("response.status: " + str(response.status))
+            logger.error("начался запрос gpt")
+            if response.status != 200:
+                logger.error(f"Ошибка! Код http-ответа: {response.status}")
+                return
+            resp_json = await response.json()
+
+            if resp_json["is_success"]:
+                resp_msg = resp_json["response"]
+                used_words = resp_json["used_words_count"]
+                return resp_msg
+
+            else:
+                error = resp_json["error_message"]
+                logger.error(f"Ошибка! {error}")
+            logger.error("response.status: " + str(response.status))
+            logger.error("закончился запрос gpt")
